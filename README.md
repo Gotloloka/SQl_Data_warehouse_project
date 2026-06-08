@@ -5,7 +5,7 @@ This project demonstratesa comprehensive data warehousing and analytics solution
 
 ---
 
-##🚀 Project requirements 
+## 🚀 Project requirements 
 
 ### Building the Data Warehouse **Data Engineering**.
 
