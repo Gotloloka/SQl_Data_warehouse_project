@@ -10,8 +10,7 @@ CREATE TABLE silver.crm_cust_info(
 	cst_lastname NVARCHAR(50),
 	cst_marital_status NVARCHAR(50),
 	cst_gndr NVARCHAR(50),
-	cst_create_date DATE,
-	dwh_create_date DATETIME2 DEFAULT GETDATE()
+	cst_create_date DATE
 );
 GO 
 IF OBJECT_ID ('silver.crm_prd_info','U') IS NOT NULL
@@ -24,8 +23,7 @@ prd_nam NVARCHAR(50),
 prd_cost INT,
 prd_line NVARCHAR(10),
 prd_start DATE,
-prd_end DATE,
-dwh_create_date DATETIME2 DEFAULT GETDATE()
+prd_end DATE
 );
 
 GO
@@ -41,8 +39,7 @@ sls_ship_dt INT,
 sls_due_dt INT,
 sls_sales INT,
 sls_quantity INT,
-sls_price INT,
-dwh_create_date DATETIME2 DEFAULT GETDATE()
+sls_price INT
 );
 
 GO
@@ -52,8 +49,7 @@ GO
 CREATE TABLE silver.erp_cust_az12 (
 	cust_ID NVARCHAR(25),
 	bith_date DATE,
-	cust_gender NVARCHAR(10),
-	dwh_create_date DATETIME2 DEFAULT GETDATE()
+	cust_gender NVARCHAR(10)
 
 );
 
@@ -63,8 +59,7 @@ IF OBJECT_ID ('silver.erp_loc_a101','U') IS NOT NULL
 GO
 CREATE TABLE silver.erp_loc_a101(
 	cust_ID NVARCHAR(25),
-	country NVARCHAR(50),
-	dwh_create_date DATETIME2 DEFAULT GETDATE()
+	country NVARCHAR(50)
 );
 GO
 IF OBJECT_ID ('silver.erp_px_cat_g1v2','U') IS NOT NULL
@@ -74,6 +69,5 @@ CREATE TABLE silver.erp_px_cat_g1v2(
 	ID NVARCHAR(50),
 	category NVARCHAR(50),
 	sub_category NVARCHAR(50),
-	maintenance NVARCHAR(10),
-	dwh_create_date DATETIME2 DEFAULT GETDATE()
+	maintenance NVARCHAR(10)
 );
