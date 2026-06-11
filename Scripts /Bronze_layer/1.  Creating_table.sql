@@ -6,9 +6,9 @@ IF OBJECT_ID ('bronze.crm_cust_info','U') IS NOT NULL
 CREATE TABLE bronze.crm_cust_info(
 	cst_id INT,
 	cst_key NVARCHAR(50),
-	cst_firt_name NVARCHAR(50),
+	cst_first_name NVARCHAR(50), 
 	cst_lastname NVARCHAR(50),
-	cst_material_status NVARCHAR(50),
+	cst_marital_status NVARCHAR(50),
 	cst_gndr NVARCHAR(50),
 	cst_create_date DATE
 );
@@ -23,7 +23,7 @@ prd_nam NVARCHAR(50),
 prd_cost INT,
 prd_line NVARCHAR(10),
 prd_start DATE,
-prd_END DATE
+prd_end DATE
 );
 
 GO
@@ -71,3 +71,4 @@ CREATE TABLE bronze.erp_px_cat_g1v2(
 	sub_category NVARCHAR(50),
 	maintenance NVARCHAR(10)
 );
+
