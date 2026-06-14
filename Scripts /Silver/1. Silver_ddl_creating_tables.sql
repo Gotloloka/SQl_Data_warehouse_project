@@ -1,7 +1,5 @@
 USE Datawarehouse;
 -- Creating table for Datawarehouse Database 
-USE Datawarehouse;
--- Creating table for Datawarehouse Database 
 
 IF OBJECT_ID ('silver.crm_cust_info','U') IS NOT NULL
 	DROP TABLE silver.crm_cust_info;
@@ -26,8 +24,8 @@ prd_key NVARCHAR(50),
 prd_nm NVARCHAR(50),
 prd_cost INT,
 prd_line NVARCHAR(10),
-prd_start_dt DATETIME,
-prd_end_dt DATETIME,
+prd_start_dt DATE ,
+prd_end_dt DATE,
 dwh_create_date DATETIMe2 DEFAULT GETDATE()
 );
 
