@@ -142,5 +142,5 @@ DECLARE @batch_start_time DATETIME,@batch_end_time DATETIME;
 	END CATCH;
 	
 END;
-
+GO
 exec bronze.load_bronze;
