@@ -16,6 +16,7 @@ Usage Example:
 	EXEC silver.load_load_silver 
 ==================================================================
 */
+
 CREATE OR ALTER PROCEDURE silver.load_silver AS 
 BEGIN 
 	DECLARE @start_time DATETIME,@end_time DATETIME ;
@@ -33,11 +34,11 @@ BEGIN
 	PRINT'>> Truncating Table: silver.crm_cust.info';
 	TRUNCATE TABLE silver.crm_cust_info;
 	Print '>> Inserting Data Into: silver.crm_cust_info';
-	INSERT INTO SILVER.crm_cust_info(cst_id,cst_key,cst_first_name,cst_lastname,cst_marital_status,cst_gndr,cst_create_date)
+	INSERT INTO SILVER.crm_cust_info(cst_id,cst_key,cst_firstname,cst_lastname,cst_marital_status,cst_gndr,cst_create_date)
 	SELECT 
 		cst_id,
 		cst_key,
-		TRIM(cst_first_name) AS cst_first_name ,
+		TRIM(cst_firstname) AS cst_first_name ,
 		TRIM(cst_lastname) AS cst_lastname,
 		CASE when UPPER(TRIM(cst_marital_status)) ='s' THEN 'Single'
 			WHEN UPPER(TRIM(cst_marital_status)) = 'M' THEN 'Married'
@@ -46,7 +47,7 @@ BEGIN
 		CASE when UPPER(TRIM(cst_gndr)) ='F' THEN 'Female'
 			WHEN UPPER(TRIM(cst_gndr)) = 'M' THEN 'Male'
 			ELSE 'N/A'
-		END cst_gender,
+		END cst_gndr,
 		cst_create_date
 
 	FROM ( SELECT * 
@@ -118,13 +119,13 @@ BEGIN
 		CASE WHEN sls_due_dt=0 OR LEN(sls_due_dt) != 8 THEN NULL
 			ELSE CAST(CAST(sls_due_dt as VARCHAR) as DATE) 
 		END sls_due_dt,
-		CASE  WHEN sls_sales IS NULL OR sls_sales <=0 OR sls_sales != sls_quantity*abs(sls_price) THEN sls_quantity*sls_price 
+		CASE  WHEN sls_sales IS NULL OR sls_sales <=0 OR sls_sales != sls_qty*abs(sls_price) THEN sls_qty*sls_price 
 			ELSE sls_sales
 		END sls_sales,-- Recalculate sales if original value is missing or incorrect 
-		CASE  WHEN sls_quantity IS NULL OR sls_quantity <=0  THEN sls_sales/NULLIF(sls_price,0)
-			ELSE sls_quantity
-		END	sls_quantity,
-		CASE  WHEN sls_price IS NULL OR sls_price <=0  THEN sls_sales/NULLIF(sls_quantity,0)
+		CASE  WHEN sls_qty IS NULL OR sls_qty <=0  THEN sls_sales/NULLIF(sls_price,0)
+			ELSE sls_qty
+		END	sls_qty,
+		CASE  WHEN sls_price IS NULL OR sls_price <=0  THEN sls_sales/NULLIF(sls_qty,0)
 			ELSE sls_price
 		END	sls_price -- Derive price original value is invalid 
 	FROM bronze.crm_sales_details;
@@ -139,18 +140,18 @@ BEGIN
 	TRUNCATE TABLE silver.erp_cust_az12
 	PRINT '>> Insesrting Data Into: silver.erp_cust_az12'
 	 /* LOAD and CLEAN silver.erp_cust_az12 */
-	INSERT INTO silver.erp_cust_az12( cust_ID,bith_date,cust_gender)
+	INSERT INTO silver.erp_cust_az12( cst_id,bdate,cst_gndr)
 	SELECT 
-		CASE WHEN cust_ID  like  'NAS%' THEN SUBSTRING(cust_ID ,4,len(cust_ID )) 
-		else cust_ID
+		CASE WHEN cst_id  like  'NAS%' THEN SUBSTRING(cst_id ,4,len(cst_id )) 
+		else cst_id
 		END cid,
-		CASE WHEN bith_date>getdate() then NULL
-			ELSE bith_date
-		END AS birth_date,
-		CASE WHEN UPPER(TRIM(cust_gender)) in ('F','FEMALE') THEN 'FEMALE'
-			when UPPER(TRIM(cust_gender)) in ('M','MALE') THEN 'MALE'
+		CASE WHEN bdate>getdate() then NULL
+			ELSE bdate
+		END AS bdate,
+		CASE WHEN UPPER(TRIM(cst_gender)) in ('F','FEMALE') THEN 'FEMALE'
+			when UPPER(TRIM(cst_gender)) in ('M','MALE') THEN 'MALE'
 			ELSE 'N/A'
-		END cust_gender 
+		END cst_gndr 
 	FROM bronze.erp_cust_az12;
 	SET @end_time = GETDATE();
 	PRINT '>>Load Duration: '+ CAST(DATEDIFF(SECOND, @start_time,@end_time) as NVARCHAR) + 'seconds';
@@ -160,14 +161,14 @@ BEGIN
 	TRUNCATE TABLE silver.erp_loc_a101
 	Print '>> Insesrting Data Into: silver.erp_loc_a101'
 	/* load and clean erp_loc_a101 */
-	INSERT INTO silver.erp_loc_a101( cust_id, country)
+	INSERT INTO silver.erp_loc_a101( cst_id, cntry)
 	SELECT 
-		replace(cust_ID,'-','') cid,
-		CASE WHEN UPPER(TRIM(country)) in ('US','USA') THEN 'United State'
-			when UPPER(TRIM(country)) in ('DE','Germany') THEN 'GERMANY'
-			when UPPER(TRIM(country))  = '' or country IS NULL THEN 'N/A'
-		ELSE TRIM(country)
-		END countries -- Normalize and Handel missing or blank country codes 
+		replace(cst_id,'-','') cst_id,
+		CASE WHEN UPPER(TRIM(cntry)) in ('US','USA') THEN 'United States'
+			when UPPER(TRIM(cntry)) in ('DE','Germany') THEN 'Germany'
+			when UPPER(TRIM(cntry))  = '' or cntry IS NULL THEN 'N/A'
+		ELSE TRIM(cntry)
+		END cntry -- Normalize and Handel missing or blank country codes 
 	FROM bronze.erp_loc_a101;
 	SET @end_time = GETDATE();
 	PRINT '>>Load Duration: '+ CAST(DATEDIFF(SECOND, @start_time,@end_time) as NVARCHAR) + 'seconds';
@@ -177,11 +178,11 @@ BEGIN
 	TRUNCATE TABLE silver.erp_px_cat_g1v2
 	Print '>> Insesrting Data Into: silver.erp_px_cat_g1v2'
 	 /* LOAD and CLEAN silver.erp_px_cat_g1v2 */
-	 INSERT INTO silver.erp_px_cat_g1v2( ID,category,sub_category,maintenance)
+	 INSERT INTO silver.erp_px_cat_g1v2( cst_id,cat,sub_cat,maintenance)
 	 SELECT 
-		id, 
-		TRIM(category),
-		TRIM(sub_category),
+		cst_id, 
+		TRIM(cat),
+		TRIM(sub_cat),
 		maintenance
 	 FROM bronze.erp_px_cat_g1v2;
 	 SET @end_time = GETDATE();
