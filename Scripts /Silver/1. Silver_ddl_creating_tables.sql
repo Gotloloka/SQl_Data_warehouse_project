@@ -6,7 +6,7 @@ IF OBJECT_ID ('silver.crm_cust_info','U') IS NOT NULL
 CREATE TABLE silver.crm_cust_info(
 	cst_id INT,
 	cst_key NVARCHAR(50),
-	cst_first_name NVARCHAR(50), 
+	cst_firstname NVARCHAR(50), 
 	cst_lastname NVARCHAR(50),
 	cst_marital_status NVARCHAR(50),
 	cst_gndr NVARCHAR(50),
@@ -51,9 +51,9 @@ IF OBJECT_ID ('silver.erp_cust_az12','U') IS NOT NULL
 	DROP TABLE silver.erp_cust_az12;
 GO
 CREATE TABLE silver.erp_cust_az12 (
-	cust_ID NVARCHAR(25),
-	bith_date DATE,
-	cust_gender NVARCHAR(10),
+	cst_id NVARCHAR(25),
+	bdate DATE,
+	cst_gndr NVARCHAR(10),
 	dwh_create_date DATETIMe2 DEFAULT GETDATE()
 
 );
@@ -63,8 +63,8 @@ IF OBJECT_ID ('silver.erp_loc_a101','U') IS NOT NULL
 	DROP TABLE silver.erp_loc_a101;
 GO
 CREATE TABLE silver.erp_loc_a101(
-	cust_ID NVARCHAR(25),
-	country NVARCHAR(50),
+	cst_id NVARCHAR(25),
+	cntry NVARCHAR(50),
 	dwh_create_date DATETIMe2 DEFAULT GETDATE()
 );
 GO
@@ -72,9 +72,9 @@ IF OBJECT_ID ('silver.erp_px_cat_g1v2','U') IS NOT NULL
 	DROP TABLE silver.erp_px_cat_g1v2;
 GO
 CREATE TABLE silver.erp_px_cat_g1v2(
-	ID NVARCHAR(50),
-	category NVARCHAR(50),
-	sub_category NVARCHAR(50),
+	cst_id NVARCHAR(50),
+	cat NVARCHAR(50),
+	sub_cat NVARCHAR(50),
 	maintenance NVARCHAR(10),
 	dwh_create_date DATETIMe2 DEFAULT GETDATE()
 );
