@@ -39,7 +39,7 @@ The Gold layer is hte business_level data representation, structured to support 
  |product_line |NVARCHAR(50)  | The specific product line or series to  which the product belongs (e.g. Road, Mountain).|
  |start_date |DATE| The date when the product became availible for sale or use, stored in |
 
-### 3. gold.dim_customer
+### 3. gold.fact_sales 
 |Column Name  | Data Type|Description|
 | --- | --- | --- |
 |order_number|NVARCHAR(50)  | An unique alphanumeric identifier for each sales order (e.g. 'SO54496'). |
