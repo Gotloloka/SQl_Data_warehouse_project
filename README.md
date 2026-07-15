@@ -6,7 +6,7 @@ Welcome to the **Data Warehosuse and Analytics Project** repository!🚀
 ---
 Project view 
 Thia project involves:
- 1. __ Data Architecture__: Designing a Modern Data Warehouse Medallion Architecture Bronze, Silver and Gold layers.
+ 1. __Data Architecture__: Designing a Modern Data Warehouse Medallion Architecture Bronze, Silver and Gold layers.
  2. __ETL Pipelines__: Extracting, Transforming, and loading data from source systemes into warehouse.
  3. __Data Modeling__: Developing fact and dimension tables optimized for analytical quaires.
  4. __Analytics& Reporting__: Creating SQL-based reports and dashboards for actionable insights.
