@@ -63,4 +63,4 @@ This is licensed under the [MIT License](License). You are to use, modify, and s
 Hello there! I am **Tokelo Komane**  and an  Industrial Engineering graduate, with 4 years working experience in Quality Control. I am current transition to the **Data Science**.
 
 ---
-credit to: *Data with Baraa* datawithbaraa.com/courses
+credit to: *Data with Baraa*  datawithbaraa.com/courses
